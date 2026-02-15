@@ -37,13 +37,13 @@ export async function generateMetadata(
         openGraph: {
             title: "CyberPunxels GEN",
             description: "Create unique high-fidelity pixel art street warriors for the digital underworld.",
-            images: ['/api/og?id=1'],
+            images: ['/images/og-main.jpg'],
         },
         twitter: {
             card: 'summary_large_image',
             title: "CyberPunxels GEN",
             description: "Create unique high-fidelity pixel art street warriors for the digital underworld.",
-            images: ['/api/og?id=1'],
+            images: ['/images/og-main.jpg'],
         }
     };
 }
