@@ -42,15 +42,15 @@ export default function PunxeltownPage() {
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.2 }}
-                    className="relative w-full aspect-square md:aspect-video mb-16 pixel-border overflow-hidden bg-cyber-black"
+                    className="relative w-full aspect-square mb-16 pixel-border overflow-hidden bg-cyber-black flex items-center justify-center p-2"
                 >
                     <Image
                         src="/images/punxeltown.png"
                         alt="Punxeltown Pixel Art"
                         fill
-                        className="object-cover"
+                        className="object-contain"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-cyber-black/60 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-cyber-black/20 to-transparent pointer-events-none" />
                 </motion.div>
 
                 <motion.div
