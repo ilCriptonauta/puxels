@@ -71,8 +71,8 @@ export default function LimitModal({ isOpen, onClose, nextAvailableTime }: Limit
                     </h3>
 
                     <p className="font-pixel-body text-lg text-gray-600 mb-8">
-                        You have reached the temporary processing limit of 4 characters.
-                        Our neural cores need some time to cool down.
+                        You have reached the generation limit of 4 characters per hour.
+                        Please come back later once the system has cooled down.
                     </p>
 
                     <div className="bg-cyber-black text-white p-6 mb-8 flex flex-col items-center gap-2">

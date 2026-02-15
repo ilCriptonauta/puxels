@@ -75,12 +75,10 @@ export default function HomePage({ initialId }: HomePageProps) {
     const now = Date.now();
     const recentGens = genHistory.filter(t => t > now - 3600000);
 
-    /* 
     if (recentGens.length >= 4) {
       setShowLimitModal(true);
       return;
     }
-    */
 
     setIsGenerating(true);
 
