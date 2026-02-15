@@ -82,12 +82,15 @@ export default function HomePage({ initialId }: HomePageProps) {
 
     setIsGenerating(true);
 
-    // Simulate generation delay for visual effect
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    // Get current count from Supabase for sequential ID
+    const { count: currentCount, error: countError } = await supabase
+      .from('characters')
+      .select('*', { count: 'exact', head: true });
 
-    // For new generations, we use a random large ID to keep it somewhat unique and deterministic
-    const randomId = Math.floor(Math.random() * 1000000);
-    const newArt = generateCyberPixel(randomId);
+    if (countError) console.error("Count fetch error:", countError);
+
+    const nextId = (currentCount || 0) + 1;
+    const newArt = generateCyberPixel(nextId);
 
     // Save to Supabase if online/production (as requested)
     if (process.env.NODE_ENV === 'production' || true) { // Enabled also for test if needed, but the user said localhost can disappear. I'll keep it active for now so they see it works.
