@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Zap } from "lucide-react";
 
@@ -93,6 +94,14 @@ export default function PixelCanvas({ onGenerate, currentSvg, isGenerating, them
             >
                 {isGenerating ? "GENERATING..." : "GENERATE PUNXEL"}
             </button>
+
+            <Link
+                href="/punxeltown"
+                className="font-pixel-body text-cyber-pink hover:underline uppercase tracking-widest text-sm mt-2 flex items-center gap-2"
+            >
+                <div className="w-2 h-2 bg-cyber-pink animate-pulse" />
+                Explore Punxeltown
+            </Link>
         </div>
     );
 }

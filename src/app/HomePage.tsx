@@ -62,9 +62,18 @@ export default function HomePage({ initialId }: HomePageProps) {
     localStorage.setItem("gen_history", JSON.stringify(genHistory));
   }, [genHistory]);
 
-  // Update theme attribute
+  // Load theme on mount
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("app_theme") as 'cyber' | 'sunset';
+    if (savedTheme) {
+      setTheme(savedTheme);
+    }
+  }, []);
+
+  // Update theme attribute and save
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem("app_theme", theme);
   }, [theme]);
 
   const toggleTheme = () => {
