@@ -43,7 +43,7 @@ export default function ArtModal({ image, onClose, onSave }: ArtModalProps) {
                 const pngUrl = URL.createObjectURL(blob);
                 const downloadLink = document.createElement("a");
                 downloadLink.href = pngUrl;
-                downloadLink.download = `cyber-puxel-${image.id.toString().padStart(6, '0')}.png`;
+                downloadLink.download = `cyber-punxel-${image.id.toString().padStart(6, '0')}.png`;
                 document.body.appendChild(downloadLink);
                 downloadLink.click();
                 document.body.removeChild(downloadLink);

@@ -126,7 +126,7 @@ export default function HomePage({ initialId }: HomePageProps) {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `cyber-puxel-${art.id.toString().padStart(6, '0')}.svg`;
+    link.download = `cyber-punxel-${art.id.toString().padStart(6, '0')}.svg`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -143,7 +143,7 @@ export default function HomePage({ initialId }: HomePageProps) {
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 bg-cyber-pink animate-pulse" />
           <h1 className="font-pixel-heading text-lg tracking-tighter text-white logo-text">
-            CYBERPUXEL <span className="text-cyber-pink">GEN</span>
+            CYBERPUNXELS <span className="text-cyber-pink">GEN</span>
           </h1>
         </div>
 
@@ -184,7 +184,7 @@ export default function HomePage({ initialId }: HomePageProps) {
             animate={{ opacity: 1, scale: 1 }}
             className="text-4xl md:text-6xl font-pixel-heading mb-6 uppercase tracking-tight text-foreground"
           >
-            Cyber <span className="text-cyber-pink drop-shadow-[4px_4px_0_var(--accent-shadow)]">Puxel</span>
+            Cyber <span className="text-cyber-pink drop-shadow-[4px_4px_0_var(--accent-shadow)]">Punxels</span>
           </motion.h2>
           <p className="font-pixel-body text-xl max-w-2xl mx-auto mb-12 opacity-80 text-muted">
             Generate unique high-fidelity pixel art street warriors for the digital underworld.
