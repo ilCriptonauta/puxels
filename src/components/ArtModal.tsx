@@ -85,6 +85,8 @@ export default function ArtModal({ image, onClose, onSave }: ArtModalProps) {
         }
     };
 
+    const isMythic = image.traits.some(t => t.value === "Mythic");
+
     return (
         <AnimatePresence>
             <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -100,35 +102,53 @@ export default function ArtModal({ image, onClose, onSave }: ArtModalProps) {
                     initial={{ scale: 0.9, opacity: 0, y: 20 }}
                     animate={{ scale: 1, opacity: 1, y: 0 }}
                     exit={{ scale: 0.9, opacity: 0, y: 20 }}
-                    className="relative w-full max-w-4xl bg-white overflow-hidden flex flex-col md:flex-row border-4 border-cyber-black shadow-[5px_5px_0_rgba(0,0,0,1)] md:shadow-[10px_10px_0_rgba(0,0,0,1)] max-h-[95vh] md:max-h-[90vh]"
+                    className={`relative w-full max-w-4xl bg-white overflow-hidden flex flex-col md:flex-row border-4 ${isMythic ? 'border-[#FFD700]' : 'border-cyber-black'} shadow-[5px_5px_0_rgba(0,0,0,1)] md:shadow-[10px_10px_0_rgba(0,0,0,1)] max-h-[95vh] md:max-h-[90vh]`}
                 >
+                    {isMythic && (
+                        <div className="absolute inset-0 pointer-events-none z-10 border-[6px] border-[#FFD700]/50 animate-pulse" />
+                    )}
+
                     {/* Close button */}
                     <button
                         onClick={onClose}
-                        className="absolute top-2 right-2 md:top-4 md:right-4 p-2 bg-cyber-black text-white hover:bg-cyber-pink transition-colors z-30"
+                        className={`absolute top-2 right-2 md:top-4 md:right-4 p-2 ${isMythic ? 'bg-[#FFD700] text-black' : 'bg-cyber-black text-white'} hover:bg-cyber-pink transition-colors z-30`}
                     >
                         <X size={20} />
                     </button>
 
                     {/* Left: Image */}
                     <div
-                        className="w-full md:w-1/2 h-[35vh] md:h-auto md:aspect-square bg-[#f8f9fa] flex items-center justify-center p-6 md:p-12 cursor-pointer group relative overflow-hidden flex-shrink-0"
+                        className={`w-full md:w-1/2 h-[35vh] md:h-auto md:aspect-square ${isMythic ? 'bg-gradient-to-br from-[#FFD700]/10 via-white to-[#FFD700]/10' : 'bg-[#f8f9fa]'} flex items-center justify-center p-6 md:p-12 cursor-pointer group relative overflow-hidden flex-shrink-0`}
                     >
+                        {isMythic && (
+                            <div className="absolute inset-0 z-0">
+                                <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-[#FFD700] animate-ping" />
+                                <div className="absolute top-3/4 left-1/2 w-1 h-1 bg-white animate-ping delay-300" />
+                                <div className="absolute top-1/2 left-3/4 w-2 h-2 bg-[#FFD700] animate-ping delay-700" />
+                            </div>
+                        )}
                         <div
                             id={`modal-svg-${image.id}`}
-                            className="w-full h-full max-w-[250px] md:max-w-none drop-shadow-2xl transition-transform group-hover:scale-105"
+                            className="w-full h-full max-w-[250px] md:max-w-none drop-shadow-2xl transition-transform group-hover:scale-105 z-10"
                             dangerouslySetInnerHTML={{ __html: image.svg }}
                         />
-                        <div className="absolute top-0 left-0 w-full h-full bg-cyber-pink/5 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity" />
+                        <div className={`absolute top-0 left-0 w-full h-full ${isMythic ? 'bg-[#FFD700]/5' : 'bg-cyber-pink/5'} opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity`} />
                     </div>
 
                     {/* Right: Details */}
                     <div className="w-full md:w-1/2 p-4 md:p-8 flex flex-col gap-4 md:gap-6 bg-white border-t-4 md:border-t-0 md:border-l-4 border-cyber-black overflow-y-auto overflow-x-hidden">
                         <div className="pr-10 md:pr-12">
                             <div className="flex items-center justify-between mb-1 md:mb-2">
-                                <h3 className="font-pixel-heading text-lg md:text-xl text-cyber-black">
-                                    PUNXEL #{image.id.toString().padStart(6, '0')}
-                                </h3>
+                                <div className="flex flex-col gap-1">
+                                    {isMythic && (
+                                        <span className="font-pixel-heading text-[10px] bg-[#FFD700] text-black px-2 py-0.5 w-fit animate-pulse">
+                                            MYTHIC RARITY
+                                        </span>
+                                    )}
+                                    <h3 className="font-pixel-heading text-lg md:text-xl text-cyber-black">
+                                        PUNXEL #{image.id.toString().padStart(6, '0')}
+                                    </h3>
+                                </div>
                                 <button
                                     onClick={handleShare}
                                     className="p-2 border-2 border-cyber-black hover:bg-cyber-pink text-cyber-black transition-colors"

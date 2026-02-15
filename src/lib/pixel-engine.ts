@@ -122,17 +122,20 @@ export function generateCyberPixel(id: number): GeneratedPixelArt {
     // --- State Selection with Contrast Guarantee ---
     const isWoman = random() > 0.5;
 
+    // --- Rarity Check (Mythic: 1% chance) ---
+    const isMythic = random() < 0.01;
+
     // 1. Select background first
     const isNight = random() > 0.5;
     const bgType = isNight ? "night" : "day";
     const bgPalette = isNight ? PALETTES.background.night : PALETTES.background.day;
-    let bgColor = bgPalette[Math.floor(random() * bgPalette.length)];
+    let bgColor = isMythic ? "#FFD700" : bgPalette[Math.floor(random() * bgPalette.length)];
 
     // Stars (only for night, 70% chance)
-    const hasStars = isNight && random() > 0.3;
+    const hasStars = !isMythic && isNight && random() > 0.3;
 
     // Rain (both day and night, 40% chance)
-    const hasRain = random() > 0.6;
+    const hasRain = !isMythic && random() > 0.6;
 
     // 2. Select skin color with good contrast to background
     let skinColor = "";
@@ -156,17 +159,21 @@ export function generateCyberPixel(id: number): GeneratedPixelArt {
 
     const skinDark = adjustColor(skinColor, -30);
 
-    // 3. Select suit color with good contrast to background
+    // 3. Select suit color
     let suitColor = "";
-    attempts = 0;
-
-    while (attempts < maxAttempts) {
-        const candidate = PALETTES.suits[Math.floor(random() * PALETTES.suits.length)];
-        if (hasGoodContrast(candidate, bgColor)) {
-            suitColor = candidate;
-            break;
+    if (isMythic) {
+        suitColor = "#B9F2FF"; // Diamond color
+        traitList.push({ label: "Rarity", value: "Mythic" });
+    } else {
+        attempts = 0;
+        while (attempts < maxAttempts) {
+            const candidate = PALETTES.suits[Math.floor(random() * PALETTES.suits.length)];
+            if (hasGoodContrast(candidate, bgColor)) {
+                suitColor = candidate;
+                break;
+            }
+            attempts++;
         }
-        attempts++;
     }
 
     // Fallback: use a very dark suit if nothing works
@@ -174,8 +181,8 @@ export function generateCyberPixel(id: number): GeneratedPixelArt {
         suitColor = "#0F172A";
     }
 
-    const suitLight = adjustColor(suitColor, 30);
-    const neonColor = PALETTES.neon[Math.floor(random() * PALETTES.neon.length)];
+    const suitLight = isMythic ? "#E0FBFF" : adjustColor(suitColor, 30);
+    const neonColor = isMythic ? "#FFFFFF" : PALETTES.neon[Math.floor(random() * PALETTES.neon.length)];
 
     const type = isWoman ? "Woman" : "Man";
     traitList.push({ label: "Type", value: type });
@@ -265,7 +272,12 @@ export function generateCyberPixel(id: number): GeneratedPixelArt {
         const expansion = (y - bodyStartY) * 0.7;
         const width = shoulderWidth + expansion;
         for (let x = midX - width; x <= midX + width; x++) {
-            drawPixel(x, y, suitColor);
+            // Mythic Glints (random sparkles on diamond suit)
+            if (isMythic && random() > 0.92) {
+                drawPixel(x, y, "#FFFFFF");
+            } else {
+                drawPixel(x, y, suitColor);
+            }
         }
     }
 
