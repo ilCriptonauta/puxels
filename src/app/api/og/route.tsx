@@ -53,10 +53,10 @@ export async function GET(request: Request) {
 
                         <div style={{ marginTop: '24px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                             <span style={{ fontSize: '32px', fontWeight: 'bold', color: '#000', fontFamily: 'monospace' }}>
-                                CYBER PUNXEL #{id.toString().padStart(3, '0')}
+                                PUNXEL #{id.toString().padStart(6, '0')}
                             </span>
                             <span style={{ fontSize: '18px', color: '#666', marginTop: '8px' }}>
-                                @CYBER_PIXEL_GEN
+                                @CYBERPUNXELS_GEN
                             </span>
                         </div>
                     </div>

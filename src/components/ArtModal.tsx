@@ -65,13 +65,13 @@ export default function ArtModal({ image, onClose, onSave }: ArtModalProps) {
     };
 
     const handleShare = async () => {
-        const text = `Ehy, guarda cosa ho appena generato #PUNXEL`;
+        const text = `Check out this #PUNXEL I just generated! ⚡️`;
         const shareUrl = `${window.location.origin}/?id=${image.id}`;
 
         if (navigator.share) {
             try {
                 await navigator.share({
-                    title: 'Cyber Punxel',
+                    title: 'Cyber Punxels',
                     text: text,
                     url: shareUrl,
                 });
