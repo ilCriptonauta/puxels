@@ -197,6 +197,7 @@ export default function HomePage({ initialId }: HomePageProps) {
           onGenerate={handleGenerate}
           currentSvg={currentSvg}
           isGenerating={isGenerating}
+          theme={theme}
         />
 
         {/* Gallery */}

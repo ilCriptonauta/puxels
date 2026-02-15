@@ -8,10 +8,13 @@ interface PixelCanvasProps {
     onGenerate: (svg: string) => void;
     currentSvg: string | null;
     isGenerating: boolean;
+    theme?: 'cyber' | 'sunset';
 }
 
-export default function PixelCanvas({ onGenerate, currentSvg, isGenerating }: PixelCanvasProps) {
+export default function PixelCanvas({ onGenerate, currentSvg, isGenerating, theme = 'cyber' }: PixelCanvasProps) {
     const [pixels, setPixels] = useState<{ id: number; active: boolean }[]>([]);
+
+    const activeColor = theme === 'cyber' ? "#00F2FF" : "#F97316";
 
     useEffect(() => {
         // Initialize 256 pixels for a denser 16x16 grid animation
@@ -51,8 +54,7 @@ export default function PixelCanvas({ onGenerate, currentSvg, isGenerating }: Pi
                                     <motion.div
                                         key={p.id}
                                         animate={{
-                                            // Using #00F2FF (Azure) as requested
-                                            backgroundColor: p.active ? "#00F2FF" : "#f1f5f9",
+                                            backgroundColor: p.active ? activeColor : "#f1f5f9",
                                             opacity: p.active ? 1 : 0.4
                                         }}
                                         className="w-full aspect-square transition-all duration-300"
