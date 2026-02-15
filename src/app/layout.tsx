@@ -15,7 +15,7 @@ const vt323 = VT323({
 });
 
 export const metadata: Metadata = {
-  title: "Cyber Pixel Generator",
+  title: "CyberPunxels GEN",
   description: "Minimalist Cyberpunk Pixel Art Generator",
 };
 
