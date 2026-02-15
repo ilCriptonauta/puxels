@@ -91,7 +91,7 @@ export default function PixelCanvas({ onGenerate, currentSvg, isGenerating, them
                 disabled={isGenerating}
                 className="pixel-button scale-125 hover:scale-135"
             >
-                {isGenerating ? "GENERATING..." : "GENERATE PIXEL ART"}
+                {isGenerating ? "GENERATING..." : "GENERATE PUNXEL"}
             </button>
         </div>
     );
