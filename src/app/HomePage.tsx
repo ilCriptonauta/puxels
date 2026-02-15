@@ -40,8 +40,7 @@ export default function HomePage({ initialId }: HomePageProps) {
       const { data, error } = await supabase
         .from('characters')
         .select('*')
-        .order('created_at', { ascending: false })
-        .limit(20);
+        .order('id', { ascending: false });
 
       if (data && !error) {
         setCollection(data as GeneratedPixelArt[]);
