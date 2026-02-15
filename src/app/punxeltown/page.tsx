@@ -60,7 +60,7 @@ export default function PunxeltownPage() {
                     className="space-y-8 font-pixel-body text-xl md:text-2xl leading-relaxed text-foreground opacity-90"
                 >
                     <p>
-                        In the year 20XX, after the Great Reset scorched the old world, the Punxels emerged from the wreckage of the deep servers.
+                        In the year 2184, after the Great Reset scorched the old world, the Punxels emerged from the wreckage of the deep servers.
                         They found themselves in a reality that was neither fully digital nor entirely organic—a glitch in the tapestry of time.
                     </p>
 

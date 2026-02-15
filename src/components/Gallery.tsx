@@ -27,40 +27,12 @@ export default function Gallery({ images, onSelect }: GalleryProps) {
 
     return (
         <div id="collection-top" className="w-full max-w-5xl mx-auto py-12 px-4">
-            <div className="flex flex-col md:flex-row items-center justify-between mb-8 gap-4">
-                <div className="flex-1 hidden md:block" />
-
-                <h2 className="font-pixel-heading text-lg text-center flex items-center justify-center gap-4 text-foreground">
+            <div className="flex flex-col md:flex-row items-center justify-center mb-8 gap-4 text-center">
+                <h2 className="font-pixel-heading text-lg flex items-center justify-center gap-4 text-foreground">
                     <span className="w-8 h-1 bg-cyber-pink" />
                     COLLECTION ({images.length})
                     <span className="w-8 h-1 bg-cyber-pink" />
                 </h2>
-
-                <div className="flex-1 flex justify-center md:justify-end items-center gap-4">
-                    {totalPages > 1 && (
-                        <div className="flex items-center gap-2">
-                            <button
-                                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                                disabled={validPage === 1}
-                                className="pixel-button !p-2 disabled:opacity-30 disabled:cursor-not-allowed"
-                            >
-                                <ChevronLeft size={20} />
-                            </button>
-
-                            <span className="font-pixel-heading text-[12px] min-w-[60px] text-center">
-                                PAGE {validPage} / {totalPages}
-                            </span>
-
-                            <button
-                                onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                                disabled={validPage === totalPages}
-                                className="pixel-button !p-2 disabled:opacity-30 disabled:cursor-not-allowed"
-                            >
-                                <ChevronRight size={20} />
-                            </button>
-                        </div>
-                    )}
-                </div>
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
