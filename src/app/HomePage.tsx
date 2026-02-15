@@ -56,6 +56,33 @@ export default function HomePage({ initialId }: HomePageProps) {
     }
   }, []);
 
+  // Real-time updates for characters
+  useEffect(() => {
+    const channel = supabase
+      .channel('schema-db-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'characters',
+        },
+        (payload) => {
+          const newChar = payload.new as GeneratedPixelArt;
+          setCollection(prev => {
+            // Only add if it's not already in the collection (to avoid double entry for the creator)
+            if (prev.find(c => c.id === newChar.id)) return prev;
+            return [newChar, ...prev];
+          });
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
   // Save history when it changes
   useEffect(() => {
     localStorage.setItem("gen_history", JSON.stringify(genHistory));
