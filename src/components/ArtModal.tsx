@@ -100,34 +100,34 @@ export default function ArtModal({ image, onClose, onSave }: ArtModalProps) {
                     initial={{ scale: 0.9, opacity: 0, y: 20 }}
                     animate={{ scale: 1, opacity: 1, y: 0 }}
                     exit={{ scale: 0.9, opacity: 0, y: 20 }}
-                    className="relative w-full max-w-4xl bg-white overflow-hidden flex flex-col md:flex-row border-4 border-cyber-black shadow-[10px_10px_0_rgba(0,0,0,1)]"
+                    className="relative w-full max-w-4xl bg-white overflow-hidden flex flex-col md:flex-row border-4 border-cyber-black shadow-[5px_5px_0_rgba(0,0,0,1)] md:shadow-[10px_10px_0_rgba(0,0,0,1)] max-h-[95vh] md:max-h-[90vh]"
                 >
                     {/* Close button */}
                     <button
                         onClick={onClose}
-                        className="absolute top-4 right-4 p-2 bg-cyber-black text-white hover:bg-cyber-pink transition-colors z-10"
+                        className="absolute top-2 right-2 md:top-4 md:right-4 p-2 bg-cyber-black text-white hover:bg-cyber-pink transition-colors z-30"
                     >
                         <X size={20} />
                     </button>
 
                     {/* Left: Image */}
                     <div
-                        className="w-full md:w-1/2 aspect-square bg-[#f8f9fa] flex items-center justify-center p-12 cursor-pointer group relative overflow-hidden"
+                        className="w-full md:w-1/2 h-[35vh] md:h-auto md:aspect-square bg-[#f8f9fa] flex items-center justify-center p-6 md:p-12 cursor-pointer group relative overflow-hidden flex-shrink-0"
                     >
                         <div
                             id={`modal-svg-${image.id}`}
-                            className="w-full h-full drop-shadow-2xl transition-transform group-hover:scale-105"
+                            className="w-full h-full max-w-[250px] md:max-w-none drop-shadow-2xl transition-transform group-hover:scale-105"
                             dangerouslySetInnerHTML={{ __html: image.svg }}
                         />
                         <div className="absolute top-0 left-0 w-full h-full bg-cyber-pink/5 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity" />
                     </div>
 
                     {/* Right: Details */}
-                    <div className="w-full md:w-1/2 p-8 flex flex-col gap-6 bg-white border-l-4 border-cyber-black overflow-y-auto max-h-[90vh]">
-                        <div className="pr-12">
-                            <div className="flex items-center justify-between mb-2">
-                                <h3 className="font-pixel-heading text-xl text-cyber-black">
-                                    PUNXEL #{image.id.toString().padStart(3, '0')}
+                    <div className="w-full md:w-1/2 p-4 md:p-8 flex flex-col gap-4 md:gap-6 bg-white border-t-4 md:border-t-0 md:border-l-4 border-cyber-black overflow-y-auto overflow-x-hidden">
+                        <div className="pr-10 md:pr-12">
+                            <div className="flex items-center justify-between mb-1 md:mb-2">
+                                <h3 className="font-pixel-heading text-lg md:text-xl text-cyber-black">
+                                    PUNXEL #{image.id.toString().padStart(6, '0')}
                                 </h3>
                                 <button
                                     onClick={handleShare}
@@ -137,38 +137,38 @@ export default function ArtModal({ image, onClose, onSave }: ArtModalProps) {
                                     <Share2 size={18} />
                                 </button>
                             </div>
-                            <p className="font-pixel-body text-lg text-gray-500 italic">
+                            <p className="font-pixel-body text-sm md:text-lg text-gray-500 italic leading-tight">
                                 "{textMap[image.id % textMap.length]}"
                             </p>
                         </div>
 
-                        <div className="grid grid-cols-1 gap-3">
+                        <div className="grid grid-cols-1 gap-2 md:gap-3">
                             {image.traits.map(trait => (
-                                <div key={trait.label} className="border-2 border-slate-100 p-3 hover:border-cyber-pink/30 transition-colors bg-slate-50/50 flex items-center justify-between">
+                                <div key={trait.label} className="border-2 border-slate-100 p-2 md:p-3 hover:border-cyber-pink/30 transition-colors bg-slate-50/50 flex items-center justify-between">
                                     <div className="flex items-center gap-2">
                                         <Tag size={12} className="text-cyber-pink" />
-                                        <span className="font-pixel-heading text-[9px] text-gray-400 uppercase tracking-tighter">
+                                        <span className="font-pixel-heading text-[8px] md:text-[9px] text-gray-400 uppercase tracking-tighter">
                                             {trait.label}
                                         </span>
                                     </div>
-                                    <div className="font-pixel-body text-lg text-cyber-black uppercase tracking-wide">
+                                    <div className="font-pixel-body text-sm md:text-lg text-cyber-black uppercase tracking-wide">
                                         {trait.value}
                                     </div>
                                 </div>
                             ))}
                         </div>
 
-                        <div className="flex flex-col gap-3 mt-auto">
+                        <div className="flex flex-col gap-2 md:gap-3 mt-4 md:mt-auto pb-4 md:pb-0">
                             <button
                                 onClick={() => onSave(image)}
-                                className="pixel-button flex items-center justify-center gap-3 w-full !bg-cyber-pink !text-black"
+                                className="pixel-button flex items-center justify-center gap-3 w-full !bg-cyber-pink !text-black !py-3 md:!py-4"
                             >
                                 <Download size={18} /> DOWNLOAD SVG
                             </button>
 
                             <button
                                 onClick={downloadPng}
-                                className="pixel-button flex items-center justify-center gap-3 w-full !bg-white !text-black border-2 border-cyber-black"
+                                className="pixel-button flex items-center justify-center gap-3 w-full !bg-white !text-black border-2 border-cyber-black !py-3 md:!py-4"
                             >
                                 <ImageIcon size={18} /> DOWNLOAD PNG
                             </button>

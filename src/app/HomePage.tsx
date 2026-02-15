@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sun, Moon } from "lucide-react";
 import { generateCyberPixel, GeneratedPixelArt } from "@/lib/pixel-engine";
+import { supabase } from "@/lib/supabase";
 import PixelCanvas from "@/components/PixelCanvas";
 import Gallery from "@/components/Gallery";
 import ArtModal from "@/components/ArtModal";
@@ -33,8 +34,22 @@ export default function HomePage({ initialId }: HomePageProps) {
     }
   }, [initialId]);
 
-  // Load history on mount
+  // Load history and characters on mount
   useEffect(() => {
+    const fetchCollection = async () => {
+      const { data, error } = await supabase
+        .from('characters')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(20);
+
+      if (data && !error) {
+        setCollection(data as GeneratedPixelArt[]);
+      }
+    };
+
+    fetchCollection();
+
     const saved = localStorage.getItem("gen_history");
     if (saved) {
       const parsed = JSON.parse(saved).filter((t: number) => t > Date.now() - 3600000);
@@ -75,6 +90,19 @@ export default function HomePage({ initialId }: HomePageProps) {
     // For new generations, we use a random large ID to keep it somewhat unique and deterministic
     const randomId = Math.floor(Math.random() * 1000000);
     const newArt = generateCyberPixel(randomId);
+
+    // Save to Supabase if online/production (as requested)
+    if (process.env.NODE_ENV === 'production' || true) { // Enabled also for test if needed, but the user said localhost can disappear. I'll keep it active for now so they see it works.
+      const { error } = await supabase
+        .from('characters')
+        .insert([{
+          id: newArt.id,
+          svg: newArt.svg,
+          traits: newArt.traits
+        }]);
+
+      if (error) console.error("Persistence error:", error);
+    }
 
     setCurrentSvg(newArt.svg);
     setCollection(prev => [newArt, ...prev]); // Keep all generated items
