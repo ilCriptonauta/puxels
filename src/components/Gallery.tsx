@@ -66,42 +66,93 @@ export default function Gallery({ images, onSelect }: GalleryProps) {
             </div>
 
             {totalPages > 1 && (
-                <div className="mt-12 flex justify-center items-center gap-6">
-                    <button
-                        onClick={() => {
-                            setCurrentPage(p => Math.max(1, p - 1));
-                            window.scrollTo({ top: document.getElementById('collection-top')?.offsetTop || 0, behavior: 'smooth' });
-                        }}
-                        disabled={validPage === 1}
-                        className="pixel-button flex items-center gap-2 disabled:opacity-30"
-                    >
-                        <ChevronLeft size={16} /> PREVIOUS
-                    </button>
+                <div className="mt-12 flex flex-col md:flex-row justify-center items-center gap-4 md:gap-6">
+                    <div className="flex items-center gap-2 order-2 md:order-1">
+                        <button
+                            onClick={() => {
+                                setCurrentPage(p => Math.max(1, p - 1));
+                                window.scrollTo({ top: document.getElementById('collection-top')?.offsetTop || 0, behavior: 'smooth' });
+                            }}
+                            disabled={validPage === 1}
+                            className="pixel-button !p-2 md:!px-4 md:!py-2 flex items-center gap-2 disabled:opacity-30"
+                            title="Previous Page"
+                        >
+                            <ChevronLeft size={16} /> <span className="hidden sm:inline">PREVIOUS</span>
+                        </button>
 
-                    <div className="flex gap-2">
-                        {Array.from({ length: totalPages }).map((_, i) => (
-                            <button
-                                key={i}
-                                onClick={() => setCurrentPage(i + 1)}
-                                className={`w-8 h-8 font-pixel-heading text-[10px] flex items-center justify-center transition-all ${validPage === i + 1
-                                    ? "bg-cyber-pink text-black"
-                                    : "bg-background text-foreground border-2 border-foreground/20 hover:border-cyber-pink"
-                                    }`}
-                            >
-                                {i + 1}
-                            </button>
-                        ))}
+                        <div className="flex flex-wrap items-center justify-center gap-1 md:gap-2">
+                            {(() => {
+                                const pages: (number | string)[] = [];
+                                const showBoundary = 2;
+
+                                if (totalPages <= 6) {
+                                    for (let i = 1; i <= totalPages; i++) pages.push(i);
+                                } else {
+                                    // Start pages
+                                    for (let i = 1; i <= showBoundary; i++) pages.push(i);
+
+                                    if (validPage > showBoundary + 2) {
+                                        pages.push("...");
+                                    }
+
+                                    // Middle pages
+                                    const rangeStart = Math.max(showBoundary + 1, validPage - 1);
+                                    const rangeEnd = Math.min(totalPages - showBoundary, validPage + 1);
+
+                                    for (let i = rangeStart; i <= rangeEnd; i++) {
+                                        if (!pages.includes(i)) pages.push(i);
+                                    }
+
+                                    if (validPage < totalPages - showBoundary - 1) {
+                                        pages.push("...");
+                                    }
+
+                                    // End pages
+                                    for (let i = totalPages - showBoundary + 1; i <= totalPages; i++) {
+                                        if (!pages.includes(i)) pages.push(i);
+                                    }
+                                }
+
+                                return pages.map((p, i) => (
+                                    p === "..." ? (
+                                        <span key={`dots-${i}`} className="w-8 h-8 flex items-center justify-center text-foreground/40 font-pixel-heading text-[10px]">
+                                            ...
+                                        </span>
+                                    ) : (
+                                        <button
+                                            key={p}
+                                            onClick={() => {
+                                                setCurrentPage(Number(p));
+                                                window.scrollTo({ top: document.getElementById('collection-top')?.offsetTop || 0, behavior: 'smooth' });
+                                            }}
+                                            className={`w-8 h-8 font-pixel-heading text-[10px] flex items-center justify-center transition-all ${validPage === p
+                                                ? "bg-cyber-pink text-black"
+                                                : "bg-background text-foreground border-2 border-foreground/20 hover:border-cyber-pink"
+                                                }`}
+                                        >
+                                            {p}
+                                        </button>
+                                    )
+                                ));
+                            })()}
+                        </div>
+
+                        <button
+                            onClick={() => {
+                                setCurrentPage(p => Math.min(totalPages, p + 1));
+                                window.scrollTo({ top: document.getElementById('collection-top')?.offsetTop || 0, behavior: 'smooth' });
+                            }}
+                            disabled={validPage === totalPages}
+                            className="pixel-button !p-2 md:!px-4 md:!py-2 flex items-center gap-2 disabled:opacity-30"
+                            title="Next Page"
+                        >
+                            <span className="hidden sm:inline">NEXT</span> <ChevronRight size={16} />
+                        </button>
                     </div>
 
-                    <button
-                        onClick={() => {
-                            setCurrentPage(p => Math.min(totalPages, p + 1));
-                        }}
-                        disabled={validPage === totalPages}
-                        className="pixel-button flex items-center gap-2 disabled:opacity-30"
-                    >
-                        NEXT <ChevronRight size={16} />
-                    </button>
+                    <div className="order-1 md:order-2 text-[10px] font-pixel-heading text-slate-400">
+                        PAGE <span className="text-cyber-pink">{validPage}</span> OF {totalPages}
+                    </div>
                 </div>
             )}
         </div>
