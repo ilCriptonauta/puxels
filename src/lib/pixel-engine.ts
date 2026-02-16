@@ -37,7 +37,9 @@ const PALETTES = {
             "#C7D2FE", "#DDD6FE", "#FED7E2", "#FBCFE8", "#CFFAFE",
             "#D1FAE5", "#FEF3C7", "#FFEDD5", "#E2E8F0", "#F8FAFC",
             // 6 nuovi colori diurni
-            "#BAE6FD", "#FEF9C3", "#FED7AA", "#E9D5FF", "#FBCFE8", "#D1FAE5"
+            "#BAE6FD", "#FEF9C3", "#FED7AA", "#E9D5FF", "#FBCFE8", "#D1FAE5",
+            // Altri 5 colori unici
+            "#FDE68A", "#99F6E4", "#FCA5A5", "#F0ABFC", "#E0F2FE"
         ],
         night: [
             // Sfondi notturni (scuri)
@@ -45,7 +47,9 @@ const PALETTES = {
             "#0B1437", "#1C1B33", "#0D1B2A", "#111827", "#18181B",
             "#1E293B", "#312E81", "#1F2937", "#374151", "#1E3A8A",
             // 6 nuovi colori notturni
-            "#0C0A1D", "#1A0B2E", "#0E1428", "#1B1340", "#0A1929", "#121063"
+            "#0C0A1D", "#1A0B2E", "#0E1428", "#1B1340", "#0A1929", "#121063",
+            // Altri 5 colori unici
+            "#083344", "#052e16", "#310d20", "#164e63", "#581c87"
         ]
     },
     suits: [
@@ -53,7 +57,9 @@ const PALETTES = {
         "#0F172A", "#1E1B4B", "#2D064A", "#440307", "#064E3B",
         "#171717", "#262626", "#3B0764", "#701A75", "#020617",
         // 6 nuovi colori armatura
-        "#1C1917", "#27272A", "#450A0A", "#4C0519", "#14532D", "#1E1B4B"
+        "#1C1917", "#27272A", "#450A0A", "#4C0519", "#14532D", "#1E1B4B",
+        // Altri 5 colori unici
+        "#F87171", "#818CF8", "#F472B6", "#34D399", "#60A5FA"
     ],
     neon: [
         "#00F2FF", "#FF00FF", "#39FF14", "#FFD700", "#FF4500",
