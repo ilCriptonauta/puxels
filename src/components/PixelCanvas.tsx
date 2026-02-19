@@ -9,10 +9,19 @@ interface PixelCanvasProps {
     onGenerate: (svg: string) => void;
     currentSvg: string | null;
     isGenerating: boolean;
+    isDisabled?: boolean;
+    disabledMessage?: string;
     theme?: 'cyber' | 'sunset';
 }
 
-export default function PixelCanvas({ onGenerate, currentSvg, isGenerating, theme = 'cyber' }: PixelCanvasProps) {
+export default function PixelCanvas({
+    onGenerate,
+    currentSvg,
+    isGenerating,
+    isDisabled = false,
+    disabledMessage,
+    theme = 'cyber'
+}: PixelCanvasProps) {
     const [pixels, setPixels] = useState<{ id: number; active: boolean }[]>([]);
 
     const activeColor = theme === 'cyber' ? "#00F2FF" : "#F97316";
@@ -29,7 +38,7 @@ export default function PixelCanvas({ onGenerate, currentSvg, isGenerating, them
             setPixels(prev =>
                 prev.map(p => Math.random() > 0.9 ? { ...p, active: !p.active } : p)
             );
-        }, 100);
+        }, 1000); // Slower animation to save CPU
 
         return () => clearInterval(interval);
     }, []);
@@ -37,7 +46,7 @@ export default function PixelCanvas({ onGenerate, currentSvg, isGenerating, them
     return (
         <div className="flex flex-col items-center gap-8 py-12">
             <div className="relative group">
-                {/* Decorative elements - using cyber-pink which is actually azure in CSS */}
+                {/* Decorative elements */}
                 <div className="absolute -top-4 -left-4 w-8 h-8 border-t-4 border-l-4 border-cyber-pink" />
                 <div className="absolute -bottom-4 -right-4 w-8 h-8 border-b-4 border-r-4 border-cyber-pink" />
 
@@ -87,17 +96,34 @@ export default function PixelCanvas({ onGenerate, currentSvg, isGenerating, them
                 </div>
             </div>
 
-            <button
-                onClick={() => onGenerate("")}
-                disabled={isGenerating}
-                className="pixel-button scale-125 hover:scale-135"
-            >
-                {isGenerating ? "GENERATING..." : "GENERATE PUNXEL"}
-            </button>
+            <div className="flex flex-col items-center gap-4">
+                <button
+                    onClick={() => onGenerate("")}
+                    disabled={isGenerating || isDisabled}
+                    className={`pixel-button scale-125 transition-all ${isDisabled
+                            ? "!bg-gray-400 !border-gray-600 cursor-not-allowed opacity-60 scale-110"
+                            : "hover:scale-135"
+                        }`}
+                >
+                    {isGenerating ? "GENERATING..." : "GENERATE PUNXEL"}
+                </button>
+
+                {isDisabled && disabledMessage && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="max-w-xs text-center mt-4"
+                    >
+                        <p className="font-pixel-heading text-xs text-cyber-pink uppercase tracking-wider leading-relaxed">
+                            {disabledMessage}
+                        </p>
+                    </motion.div>
+                )}
+            </div>
 
             <Link
                 href="/punxeltown"
-                className="font-pixel-body text-cyber-pink hover:underline uppercase tracking-widest text-sm mt-2 flex items-center gap-2"
+                className="font-pixel-body text-cyber-pink hover:underline uppercase tracking-widest text-sm flex items-center gap-2"
             >
                 <div className="w-2 h-2 bg-cyber-pink animate-pulse" />
                 Explore Punxeltown
@@ -105,3 +131,4 @@ export default function PixelCanvas({ onGenerate, currentSvg, isGenerating, them
         </div>
     );
 }
+

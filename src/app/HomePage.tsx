@@ -232,6 +232,8 @@ export default function HomePage({ initialId }: HomePageProps) {
           onGenerate={handleGenerate}
           currentSvg={currentSvg}
           isGenerating={isGenerating}
+          isDisabled={true}
+          disabledMessage="We have reached 1000 Punxels. Soon they will be available for mint on OOX"
           theme={theme}
         />
 
