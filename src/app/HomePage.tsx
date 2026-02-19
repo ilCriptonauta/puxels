@@ -37,14 +37,33 @@ export default function HomePage({ initialId }: HomePageProps) {
   // Load history and characters on mount
   useEffect(() => {
     const fetchCollection = async () => {
-      const { data, error } = await supabase
-        .from('characters')
-        .select('*')
-        .order('id', { ascending: false });
+      let allData: GeneratedPixelArt[] = [];
+      let from = 0;
+      const step = 1000;
+      let hasMore = true;
 
-      if (data && !error) {
-        setCollection(data as GeneratedPixelArt[]);
+      while (hasMore) {
+        const { data, error } = await supabase
+          .from('characters')
+          .select('*')
+          .range(from, from + step - 1)
+          .order('id', { ascending: false });
+
+        if (error || !data) {
+          console.error("Fetch error:", error);
+          break;
+        }
+
+        allData = [...allData, ...(data as GeneratedPixelArt[])];
+
+        if (data.length < step) {
+          hasMore = false;
+        } else {
+          from += step;
+        }
       }
+
+      setCollection(allData);
     };
 
     fetchCollection();
@@ -233,7 +252,7 @@ export default function HomePage({ initialId }: HomePageProps) {
           currentSvg={currentSvg}
           isGenerating={isGenerating}
           isDisabled={true}
-          disabledMessage="We have reached 1000 Punxels. Soon they will be available for mint on OOX"
+          disabledMessage="We have reached 1022 Punxels. Soon they will be available for mint on OOX"
           theme={theme}
         />
 
