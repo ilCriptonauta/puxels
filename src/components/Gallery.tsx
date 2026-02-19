@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import Link from "next/link";
 import { GeneratedPixelArt } from "@/lib/pixel-engine";
 
 interface GalleryProps {
@@ -155,6 +156,21 @@ export default function Gallery({ images, onSelect }: GalleryProps) {
                     </div>
                 </div>
             )}
+
+            <div className="mt-12 flex justify-center">
+                <Link href="/roadmap" className="w-full md:w-auto flex justify-center">
+                    <button
+                        className="pixel-button !px-8 !py-3 font-pixel-heading text-sm relative group overflow-hidden w-full md:w-auto"
+                    >
+                        <span className="relative z-10">VIEW ROADMAP</span>
+                        <div className="absolute inset-0 bg-cyber-pink translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                        <style jsx>{`
+                            button:hover span { color: black; }
+                        `}</style>
+                    </button>
+                </Link>
+            </div>
         </div>
     );
 }
+
