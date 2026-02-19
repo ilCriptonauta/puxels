@@ -12,8 +12,10 @@ const EXPORT_DIR = path.join(__dirname, '../../exports/punxels_v1');
 const PNG_DIR = path.join(EXPORT_DIR, 'png');
 const JSON_DIR = path.join(EXPORT_DIR, 'json');
 
+const DESCRIPTION = "The Punxels are a lost people, once just strings of code in a forgotten mainframe, now seeking to rebuild a world where technology serves the spirit. Slowly, they are gathering the fragments of the past to construct a better future—a haven for the disconnected and the brave.";
+
 async function exportPunxels() {
-    console.log('🚀 Starting Punxel Export with Pagination...');
+    console.log('🚀 Starting Punxel Export with Enhanced Metadata Format...');
 
     // Create directories
     if (!fs.existsSync(EXPORT_DIR)) fs.mkdirSync(EXPORT_DIR, { recursive: true });
@@ -51,18 +53,27 @@ async function exportPunxels() {
     for (const char of allCharacters) {
         const idStr = char.id.toString().padStart(6, '0');
 
-        // 1. Save JSON traits
+        // 1. Transform and Save JSON metadata
+        const metadata = {
+            name: `Cyber Punxel #${idStr}`,
+            description: DESCRIPTION,
+            image: `${idStr}.png`,
+            attributes: char.traits.map(t => ({
+                trait_type: t.label,
+                value: t.value
+            }))
+        };
+
         const jsonPath = path.join(JSON_DIR, `${idStr}.json`);
-        fs.writeFileSync(jsonPath, JSON.stringify(char.traits, null, 2));
+        fs.writeFileSync(jsonPath, JSON.stringify(metadata, null, 2));
 
         // 2. Convert SVG to PNG
-        // We'll resize them to 1024x1024 for high quality
         const pngPath = path.join(PNG_DIR, `${idStr}.png`);
         try {
             await sharp(Buffer.from(char.svg))
                 .png()
                 .resize(1024, 1024, {
-                    kernel: sharp.kernel.nearest, // Keep pixel art sharp
+                    kernel: sharp.kernel.nearest,
                     fit: 'contain'
                 })
                 .toFile(pngPath);
@@ -75,7 +86,7 @@ async function exportPunxels() {
         }
     }
 
-    console.log('✨ Export Complete!');
+    console.log('✨ Export and Metadata Enhancement Complete!');
     console.log(`📂 Files saved in: ${EXPORT_DIR}`);
 }
 
